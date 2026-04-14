@@ -19,7 +19,7 @@ const TABS = [
 ];
 
 // --- SHARED HELPERS ---
-async function askClaude(prompt, maxTokens = 900) {
+async function askClaude(prompt, maxTokens = 1500) {
   const res = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
     headers: {
