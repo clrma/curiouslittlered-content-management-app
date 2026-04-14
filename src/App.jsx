@@ -12,7 +12,11 @@ const TABS = [
   { id: "ideas",     icon: "💡", label: "Ideas"       },
   { id: "carousel",  icon: "🎠", label: "Carousel"    },
   { id: "repurpose", icon: "🔄", label: "Repurpose"   },
-  { id: "pinterest", icon: "📌", label: "Pinterest"   },
+
+
+
+
+xx  { id: "pinterest", icon: "📌", label: "Pinterest"   },
   { id: "freebie",   icon: "🎁", label: "Freebie"     },
   { id: "tracker",   icon: "📊", label: "Tracker"     },
 ];
@@ -24,6 +28,7 @@ async function askClaude(prompt, maxTokens = 900) {
     headers: {
       "Content-Type": "application/json",
       "anthropic-dangerous-direct-browser-access": "true",
+     "x-api-key": import.meta.env.VITE_ANTHROPIC_API_KEY,
     },
     body: JSON.stringify({
       model: "claude-sonnet-4-20250514",
