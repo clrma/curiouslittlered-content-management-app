@@ -16,7 +16,7 @@ const TABS = [
 
 
 
-xx  { id: "pinterest", icon: "📌", label: "Pinterest"   },
+  { id: "pinterest", icon: "📌", label: "Pinterest"   },
   { id: "freebie",   icon: "🎁", label: "Freebie"     },
   { id: "tracker",   icon: "📊", label: "Tracker"     },
 ];
