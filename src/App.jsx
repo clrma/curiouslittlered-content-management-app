@@ -29,7 +29,7 @@ async function askClaude(prompt, maxTokens = 900) {
       "x-api-key": import.meta.env.VITE_ANTHROPIC_API_KEY,
     },
     body: JSON.stringify({
-      model: "claude-haiku-4-5-20251001",
+      model: "claude-sonnet-4-20250514",
       max_tokens: maxTokens,
       messages: [{ role: "user", content: prompt }],
     }),
