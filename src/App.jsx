@@ -40,9 +40,7 @@ async function askClaude(prompt, maxTokens = 900) {
   }
   const data = await res.json();
   const text = data.content?.find(b => b.type === "text")?.text || "";
-  const clean = text.replace(/```json[\s\S]*?```|```[\s\S]*?```/g, m =>
-    m.replace(/```json\n?|```\n?/g, "")
-  ).trim();
+  const clean = text.replace(/^```json\s*/i, "").replace(/^```\s*/i, "").replace(/```\s*$/i, "").trim();
   return clean;
 }
 
