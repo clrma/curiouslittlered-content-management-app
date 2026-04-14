@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-// ─── BRAND ───────────────────────────────────────────────────────────────────
+// --- BRAND ---
 const B = {
   red: "#C0392B", darkRed: "#922B21", cream: "#FDF8F2",
   sand: "#E8D5B7", warm: "#F5EDD8", muted: "#9B7E5A",
@@ -12,25 +12,22 @@ const TABS = [
   { id: "ideas",     icon: "💡", label: "Ideas"       },
   { id: "carousel",  icon: "🎠", label: "Carousel"    },
   { id: "repurpose", icon: "🔄", label: "Repurpose"   },
-
-
-
-
   { id: "pinterest", icon: "📌", label: "Pinterest"   },
   { id: "freebie",   icon: "🎁", label: "Freebie"     },
   { id: "tracker",   icon: "📊", label: "Tracker"     },
+  { id: "blog",      icon: "✍️", label: "Blog"        },
 ];
 
-// ─── SHARED HELPERS ───────────────────────────────────────────────────────────
+// --- SHARED HELPERS ---
 async function askClaude(prompt, maxTokens = 900) {
   const res = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
-  headers: {
-  "Content-Type": "application/json",
-  "anthropic-version": "2023-06-01",
-  "anthropic-dangerous-direct-browser-access": "true",
-  "x-api-key": import.meta.env.VITE_ANTHROPIC_API_KEY,
-},
+    headers: {
+      "Content-Type": "application/json",
+      "anthropic-version": "2023-06-01",
+      "anthropic-dangerous-direct-browser-access": "true",
+      "x-api-key": import.meta.env.VITE_ANTHROPIC_API_KEY,
+    },
     body: JSON.stringify({
       model: "claude-sonnet-4-20250514",
       max_tokens: maxTokens,
@@ -51,7 +48,7 @@ async function askClaude(prompt, maxTokens = 900) {
 
 const CONTEXT = `Brand: CuriousLittleRed (@curiouslittlered). Solo homeschool mom. Sells Montessori-inspired digital printables (toddler activity pages + seasonal/holiday) on Etsy and her own website. Target: homeschool moms of toddlers ages 2-5. Platforms: TikTok (944 followers, best video 7,878 views - DIY butterfly glue art), Pinterest (299 followers, 130K monthly views, top pin 127K impressions). Content style: fun, playful, colorful, text-overlay videos.`;
 
-// ─── STYLES ──────────────────────────────────────────────────────────────────
+// --- STYLES ---
 const S = {
   label: { display:"block", fontSize:11, fontWeight:700, color:B.muted, marginBottom:5, textTransform:"uppercase", letterSpacing:0.8 },
   input: { width:"100%", padding:"10px 13px", borderRadius:10, border:`1.5px solid ${B.sand}`, background:"#fff", fontSize:14, color:B.dark, outline:"none", boxSizing:"border-box", fontFamily:"inherit" },
@@ -60,6 +57,7 @@ const S = {
   tag: (c) => ({ display:"inline-block", background:c+"18", color:c, fontSize:10, fontWeight:700, borderRadius:5, padding:"2px 7px", marginRight:5, textTransform:"uppercase", letterSpacing:0.5 }),
   section: { fontWeight:700, fontSize:15, color:B.dark, marginBottom:12, paddingBottom:6, borderBottom:`2px solid ${B.sand}` },
   pill: (active) => ({ background: active ? B.red : "transparent", color: active ? "#fff" : "rgba(255,255,255,0.7)", border:"none", borderRadius:"8px 8px 0 0", padding:"9px 14px", fontWeight:600, fontSize:12, cursor:"pointer", fontFamily:"inherit", whiteSpace:"nowrap", transition:"all .2s" }),
+  textarea: { width:"100%", padding:"10px 13px", borderRadius:10, border:`1.5px solid ${B.sand}`, background:"#fff", fontSize:14, color:"#2C1A0E", outline:"none", boxSizing:"border-box", fontFamily:"inherit", minHeight:120, resize:"vertical", lineHeight:1.6 },
 };
 
 function Spinner({ text="Generating..." }) {
@@ -72,7 +70,7 @@ function SectionTitle({ children }) {
   return <div style={S.section}>{children}</div>;
 }
 
-// ─── TAB 1: IDEAS ─────────────────────────────────────────────────────────────
+// --- TAB 1: IDEAS ---
 function IdeasTab() {
   const [platform, setPlatform] = useState("TikTok");
   const [type, setType] = useState("DIY Activity");
@@ -125,9 +123,9 @@ JSON only: {"ideas":[{"title":"...","hook":"...","body":"...","cta":"...","whyIt
             <div style={{ background:B.red, color:"#fff", borderRadius:"50%", width:26, height:26, display:"flex", alignItems:"center", justifyContent:"center", fontWeight:700, fontSize:12, flexShrink:0 }}>{i+1}</div>
             <div style={{ flex:1 }}>
               <div style={{ fontWeight:700, color:B.dark, fontSize:15, marginBottom:8 }}>{idea.title}</div>
-              <div style={{ marginBottom:5 }}><span style={S.tag("#E74C3C")}>🎣 Hook</span><span style={{ fontSize:13, color:B.dark }}>{idea.hook}</span></div>
-              <div style={{ marginBottom:5 }}><span style={S.tag("#8E44AD")}>📹 Body</span><span style={{ fontSize:13, color:B.dark }}>{idea.body}</span></div>
-              <div style={{ marginBottom:5 }}><span style={S.tag(B.red)}>📣 CTA</span><span style={{ fontSize:13, color:B.dark }}>{idea.cta}</span></div>
+              <div style={{ marginBottom:5 }}><span style={S.tag("#E74C3C")}>Hook</span><span style={{ fontSize:13, color:B.dark }}>{idea.hook}</span></div>
+              <div style={{ marginBottom:5 }}><span style={S.tag("#8E44AD")}>Body</span><span style={{ fontSize:13, color:B.dark }}>{idea.body}</span></div>
+              <div style={{ marginBottom:5 }}><span style={S.tag(B.red)}>CTA</span><span style={{ fontSize:13, color:B.dark }}>{idea.cta}</span></div>
               <div style={{ background:B.softGold, borderRadius:8, padding:"7px 10px", fontSize:12, color:B.gold, marginTop:6 }}>💡 {idea.whyItWorks}</div>
             </div>
           </div>
@@ -137,7 +135,7 @@ JSON only: {"ideas":[{"title":"...","hook":"...","body":"...","cta":"...","whyIt
   );
 }
 
-// ─── TAB 2: CAROUSEL ──────────────────────────────────────────────────────────
+// --- TAB 2: CAROUSEL ---
 function CarouselTab() {
   const [topic, setTopic] = useState("");
   const [slides, setSlides] = useState([]);
@@ -190,7 +188,7 @@ JSON only: {"slides":[{"slide":1,"headline":"...","body":"...","visual":"...","d
   );
 }
 
-// ─── TAB 3: REPURPOSE ─────────────────────────────────────────────────────────
+// --- TAB 3: REPURPOSE ---
 function RepurposeTab() {
   const [topic, setTopic] = useState("");
   const [plan, setPlan] = useState(null);
@@ -244,7 +242,7 @@ JSON only: {"repurpose":[{"platform":"...","caption":"...","hashtags":["..."],"a
   );
 }
 
-// ─── TAB 4: PINTEREST SEO ─────────────────────────────────────────────────────
+// --- TAB 4: PINTEREST SEO ---
 function PinterestTab() {
   const [pinTopic, setPinTopic] = useState("");
   const [result, setResult] = useState(null);
@@ -329,7 +327,7 @@ JSON only: {"title":"...","description":"...","keywords":["..."],"boardName":"..
   );
 }
 
-// ─── TAB 5: FREEBIE FUNNEL ────────────────────────────────────────────────────
+// --- TAB 5: FREEBIE FUNNEL ---
 function FreebieTab() {
   const [plan, setPlan] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -364,12 +362,11 @@ JSON only: {"freebieIdeas":[{"name":"...","why":"...","whatToInclude":"..."}],"b
       <div style={{ background:B.softGreen, borderRadius:12, padding:"12px 16px", marginBottom:20, fontSize:13, color:B.green }}>
         💸 <strong>Why this beats Amazon affiliates:</strong> {plan.whyBetter}
       </div>
-
       <SectionTitle>🎁 3 Freebie Ideas for Your Email List</SectionTitle>
       {plan.freebieIdeas?.map((f,i) => (
         <div key={i} style={{ ...S.card, marginBottom:12, borderLeft:`4px solid ${i===0?B.red:B.sand}` }}>
           <div style={{ display:"flex", gap:8, alignItems:"flex-start" }}>
-            {i===0 && <span style={{ background:B.red, color:"#fff", fontSize:10, fontWeight:700, borderRadius:5, padding:"2px 7px", flexShrink:0 }}>⭐ BEST</span>}
+            {i===0 && <span style={{ background:B.red, color:"#fff", fontSize:10, fontWeight:700, borderRadius:5, padding:"2px 7px", flexShrink:0 }}>BEST</span>}
             <div>
               <div style={{ fontWeight:700, color:B.dark, fontSize:14, marginBottom:5 }}>{f.name}</div>
               <div style={{ fontSize:13, color:"#555", marginBottom:5 }}>{f.why}</div>
@@ -378,7 +375,6 @@ JSON only: {"freebieIdeas":[{"name":"...","why":"...","whatToInclude":"..."}],"b
           </div>
         </div>
       ))}
-
       <SectionTitle style={{ marginTop:24 }}>📌 Pinterest Pin to Promote Your Freebie</SectionTitle>
       <div style={{ ...S.card, marginBottom:20 }}>
         <div style={{ fontWeight:700, color:"#E60023", fontSize:13, marginBottom:5 }}>Pin Title</div>
@@ -386,25 +382,22 @@ JSON only: {"freebieIdeas":[{"name":"...","why":"...","whatToInclude":"..."}],"b
         <div style={{ fontWeight:700, color:"#E60023", fontSize:13, marginBottom:5 }}>Pin Description</div>
         <div style={{ fontSize:13, color:B.dark, background:B.cream, borderRadius:8, padding:"9px 12px" }}>{plan.pinPromo?.description}</div>
       </div>
-
       <SectionTitle>📧 Email #1 — Thank You Email (Instant)</SectionTitle>
       <div style={{ ...S.card, marginBottom:12 }}>
         <div style={{ fontWeight:700, color:B.dark, fontSize:12, marginBottom:4 }}>Subject: {plan.thankYouEmail?.subject}</div>
         <div style={{ fontSize:13, color:"#555", lineHeight:1.6, background:B.cream, borderRadius:8, padding:"10px 12px", whiteSpace:"pre-wrap" }}>{plan.thankYouEmail?.body}</div>
       </div>
-
       <SectionTitle>📧 Email #2 — Soft Sell (3 Days Later)</SectionTitle>
       <div style={{ ...S.card, marginBottom:12 }}>
         <div style={{ fontWeight:700, color:B.dark, fontSize:12, marginBottom:4 }}>Subject: {plan.followUpEmail?.subject}</div>
         <div style={{ fontSize:13, color:"#555", lineHeight:1.6, background:B.cream, borderRadius:8, padding:"10px 12px", whiteSpace:"pre-wrap" }}>{plan.followUpEmail?.body}</div>
       </div>
-
       <button onClick={generate} style={{ ...S.btn("transparent",B.red), border:`2px solid ${B.red}`, marginTop:4 }}>🔄 Regenerate Plan</button>
     </div>
   );
 }
 
-// ─── TAB 6: TRACKER ───────────────────────────────────────────────────────────
+// --- TAB 6: TRACKER ---
 const STORE_KEY = "clr_v2_posts";
 
 function TrackerTab() {
@@ -448,7 +441,6 @@ Analyze this post performance data and give 4 short, actionable insights for Cur
   return (
     <div style={{ padding:"24px 0" }}>
       <p style={{ color:B.muted, fontSize:14, marginBottom:18 }}>Log your posts and get AI analysis on what's actually working for CuriousLittleRed.</p>
-
       {posts.length > 0 && (
         <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:10, marginBottom:20 }}>
           {[["Posts Logged", posts.length,"📝"],["Total Views",totalViews.toLocaleString(),"👁️"],["Top Post",topPost?.views.toLocaleString()||"-","🔥"]].map(([l,v,ic])=>(
@@ -460,12 +452,10 @@ Analyze this post performance data and give 4 short, actionable insights for Cur
           ))}
         </div>
       )}
-
       <div style={{ display:"flex", gap:10, marginBottom:20, flexWrap:"wrap" }}>
         <button onClick={()=>setShowForm(!showForm)} style={S.btn()}>+ Log Post</button>
         {posts.length > 0 && <button onClick={getInsights} disabled={loadingInsights} style={S.btn(B.green)}>{loadingInsights?"Analyzing...":"🔍 AI Insights"}</button>}
       </div>
-
       {showForm && (
         <div style={{ ...S.card, marginBottom:18 }}>
           <div style={{ fontWeight:700, color:B.dark, marginBottom:14 }}>Log a New Post</div>
@@ -494,16 +484,13 @@ Analyze this post performance data and give 4 short, actionable insights for Cur
           <button onClick={save} style={{ ...S.btn(), marginTop:14 }}>Save Post</button>
         </div>
       )}
-
       {insights.length > 0 && (
         <div style={{ ...S.card, background:B.softGreen, borderColor:B.green, marginBottom:16 }}>
           <div style={{ fontWeight:700, color:B.green, marginBottom:10 }}>🔍 AI Insights for CuriousLittleRed</div>
           {insights.map((ins,i)=><div key={i} style={{ fontSize:13, color:B.dark, marginBottom:7 }}>• {ins}</div>)}
         </div>
       )}
-
       {posts.length === 0 && <div style={{ textAlign:"center", color:B.muted, padding:"40px 0", fontSize:14 }}>No posts yet. Log your first one! 📝</div>}
-
       {posts.map(p=>(
         <div key={p.id} style={{ ...S.card, display:"flex", justifyContent:"space-between", marginBottom:10 }}>
           <div>
@@ -516,20 +503,149 @@ Analyze this post performance data and give 4 short, actionable insights for Cur
               <span>🔖 {p.saves}</span>
             </div>
           </div>
-          <button onClick={()=>remove(p.id)} style={{ background:"none", border:"none", cursor:"pointer", color:"#ccc", fontSize:18, alignSelf:"flex-start" }}>✕</button>
+          <button onClick={()=>remove(p.id)} style={{ background:"none", border:"none", cursor:"pointer", color:"#ccc", fontSize:18, alignSelf:"flex-start" }}>x</button>
         </div>
       ))}
     </div>
   );
 }
 
-// ─── APP SHELL ────────────────────────────────────────────────────────────────
+// --- TAB 7: BLOG ---
+function BlogTab() {
+  const [topic, setTopic] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
+  const [post, setPost] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [loadingSuggestions, setLoadingSuggestions] = useState(false);
+  const [err, setErr] = useState("");
+  const [copied, setCopied] = useState(false);
+
+  async function getSuggestions() {
+    setLoadingSuggestions(true); setSuggestions([]); setErr("");
+    try {
+      const raw = await askClaude(`${CONTEXT}
+
+Suggest 6 blog post topics for CuriousLittleRed's website. Topics should help homeschool moms of toddlers, naturally lead to her printables, and be good for Pinterest SEO.
+
+JSON only: {"topics":["...","...","...","...","...","..."]}`);
+      setSuggestions(JSON.parse(raw).topics || []);
+    } catch(e) { setErr("Could not load suggestions. " + (e.message||"")); }
+    setLoadingSuggestions(false);
+  }
+
+  async function generatePost() {
+    if (!topic.trim()) return;
+    setLoading(true); setPost(null); setErr("");
+    try {
+      const raw = await askClaude(`${CONTEXT}
+
+Write a complete blog post for CuriousLittleRed's website about: "${topic}"
+
+Requirements:
+- Warm, conversational tone — like a homeschool mom talking to another mom
+- 600-800 words
+- Include: intro, 3-5 practical tips or steps, a natural mention of her printables, closing with encouragement
+- SEO-friendly with keywords homeschool moms search for
+- End with a Pinterest-friendly summary (2 sentences max) they can use as a pin description
+
+JSON only: {"title":"...","intro":"...","sections":[{"heading":"...","content":"..."}],"printableMention":"...","closing":"...","pinterestSummary":"..."}`, 2000);
+      setPost(JSON.parse(raw));
+    } catch(e) { setErr("Could not generate — please try again! " + (e.message||"")); }
+    setLoading(false);
+  }
+
+  function copyPost() {
+    if (!post) return;
+    const text = `${post.title}\n\n${post.intro}\n\n${post.sections.map(s=>`${s.heading}\n${s.content}`).join("\n\n")}\n\n${post.printableMention}\n\n${post.closing}\n\n---\nPinterest Summary: ${post.pinterestSummary}`;
+    navigator.clipboard.writeText(text);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  }
+
+  return (
+    <div style={{ padding:"24px 0" }}>
+      <p style={{ color:B.muted, fontSize:14, marginBottom:20 }}>Write blog posts that bring Pinterest moms to your site and naturally lead them to your printables.</p>
+
+      <div style={{ marginBottom:16 }}>
+        <label style={S.label}>Blog Topic</label>
+        <input
+          value={topic}
+          onChange={e=>setTopic(e.target.value)}
+          placeholder="e.g. Easy Montessori activities for toddlers at home"
+          style={S.input}
+          onKeyDown={e=>e.key==="Enter"&&generatePost()}
+        />
+      </div>
+
+      <div style={{ display:"flex", gap:10, flexWrap:"wrap", marginBottom:20 }}>
+        <button onClick={generatePost} disabled={loading||!topic.trim()} style={S.btn()}>✍️ Write Blog Post</button>
+        <button onClick={getSuggestions} disabled={loadingSuggestions} style={S.btn(B.gold)}>💡 Suggest Topics</button>
+      </div>
+
+      <Err msg={err} />
+
+      {loadingSuggestions && <Spinner text="Finding great topics for you..." />}
+
+      {suggestions.length > 0 && (
+        <div style={{ ...S.card, marginBottom:20 }}>
+          <div style={{ fontWeight:700, color:B.dark, fontSize:13, marginBottom:12 }}>💡 Topic Ideas — click one to use it</div>
+          <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
+            {suggestions.map((s,i) => (
+              <div key={i} onClick={()=>{ setTopic(s); setSuggestions([]); }} style={{ background:B.cream, border:`1px solid ${B.sand}`, borderRadius:10, padding:"10px 14px", fontSize:13, color:B.dark, cursor:"pointer" }}>
+                {s}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {loading && <Spinner text="Writing your blog post..." />}
+
+      {post && (
+        <div style={{ marginTop:10 }}>
+          <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:16 }}>
+            <div style={{ fontWeight:700, color:B.dark, fontSize:18 }}>{post.title}</div>
+            <button onClick={copyPost} style={S.btn(copied?B.green:B.red)}>{copied?"✅ Copied!":"📋 Copy All"}</button>
+          </div>
+
+          <div style={{ ...S.card, marginBottom:12 }}>
+            <div style={{ fontWeight:700, color:B.muted, fontSize:11, textTransform:"uppercase", letterSpacing:0.8, marginBottom:8 }}>Intro</div>
+            <div style={{ fontSize:14, color:B.dark, lineHeight:1.7 }}>{post.intro}</div>
+          </div>
+
+          {post.sections?.map((sec,i) => (
+            <div key={i} style={{ ...S.card, marginBottom:12 }}>
+              <div style={{ fontWeight:700, color:B.dark, fontSize:15, marginBottom:8 }}>{sec.heading}</div>
+              <div style={{ fontSize:14, color:"#444", lineHeight:1.7 }}>{sec.content}</div>
+            </div>
+          ))}
+
+          <div style={{ ...S.card, marginBottom:12, borderLeft:`4px solid ${B.red}` }}>
+            <div style={{ fontWeight:700, color:B.red, fontSize:11, textTransform:"uppercase", letterSpacing:0.8, marginBottom:8 }}>Printable Mention</div>
+            <div style={{ fontSize:14, color:B.dark, lineHeight:1.7 }}>{post.printableMention}</div>
+          </div>
+
+          <div style={{ ...S.card, marginBottom:12 }}>
+            <div style={{ fontWeight:700, color:B.muted, fontSize:11, textTransform:"uppercase", letterSpacing:0.8, marginBottom:8 }}>Closing</div>
+            <div style={{ fontSize:14, color:B.dark, lineHeight:1.7 }}>{post.closing}</div>
+          </div>
+
+          <div style={{ background:B.softGold, borderRadius:12, padding:"14px 16px" }}>
+            <div style={{ fontWeight:700, color:B.gold, fontSize:11, textTransform:"uppercase", letterSpacing:0.8, marginBottom:6 }}>📌 Pinterest Summary</div>
+            <div style={{ fontSize:13, color:B.dark, lineHeight:1.6 }}>{post.pinterestSummary}</div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// --- APP SHELL ---
 export default function App() {
   const [active, setActive] = useState("ideas");
 
   return (
     <div style={{ minHeight:"100vh", background:B.cream, fontFamily:"'Palatino Linotype', 'Book Antiqua', Palatino, serif" }}>
-      {/* Header */}
       <div style={{ background:`linear-gradient(135deg, ${B.darkRed} 0%, ${B.red} 100%)`, paddingBottom:0, boxShadow:"0 4px 20px rgba(0,0,0,0.2)" }}>
         <div style={{ maxWidth:740, margin:"0 auto", padding:"18px 20px 0" }}>
           <div style={{ display:"flex", alignItems:"center", gap:12, marginBottom:16 }}>
@@ -548,8 +664,6 @@ export default function App() {
           </div>
         </div>
       </div>
-
-      {/* Body */}
       <div style={{ maxWidth:740, margin:"0 auto", padding:"0 18px 60px" }}>
         {active==="ideas"     && <IdeasTab />}
         {active==="carousel"  && <CarouselTab />}
@@ -557,6 +671,7 @@ export default function App() {
         {active==="pinterest" && <PinterestTab />}
         {active==="freebie"   && <FreebieTab />}
         {active==="tracker"   && <TrackerTab />}
+        {active==="blog"      && <BlogTab />}
       </div>
     </div>
   );
